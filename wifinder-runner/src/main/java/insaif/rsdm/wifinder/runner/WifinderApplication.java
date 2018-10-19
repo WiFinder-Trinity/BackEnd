@@ -1,4 +1,4 @@
-package insaif.rsdm.wifinder;
+package insaif.rsdm.wifinder.runner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

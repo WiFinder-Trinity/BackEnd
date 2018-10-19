@@ -1,4 +1,4 @@
-package insaif.rsdm.wifinder;
+package insaif.rsdm.wifinder.runner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
