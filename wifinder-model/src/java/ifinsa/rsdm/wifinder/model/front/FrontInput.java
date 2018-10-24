@@ -24,5 +24,7 @@ public class FrontInput {
         return longitude;
     }
 
-
+    public List<HotspotInformation> getHotspots() {
+        return hotspots;
+    }
 }
