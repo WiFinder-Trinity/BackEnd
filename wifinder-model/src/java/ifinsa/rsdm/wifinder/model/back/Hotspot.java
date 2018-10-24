@@ -12,11 +12,14 @@ public class Hotspot {
 
     private List<Location> locations;
 
-    public Hotspot(String bssid, String ssid, int connectionCount, List<Location> locations) {
+    private Location computedLocation;
+
+    public Hotspot(String bssid, String ssid, int connectionCount, List<Location> locations, Location computedLocation) {
         this.bssid = bssid;
         this.ssid = ssid;
         this.connectionCount = connectionCount;
         this.locations = locations;
+        this.computedLocation = computedLocation;
     }
 
     public String getBssid() {
@@ -33,5 +36,9 @@ public class Hotspot {
 
     public List<Location> getLocations() {
         return locations;
+    }
+
+    public Location getComputedLocation() {
+        return computedLocation;
     }
 }
