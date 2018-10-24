@@ -16,11 +16,15 @@ import insaif.rsdm.wifinder.service.ServiceFactory;
 @ComponentScan(basePackages = {"insaif.rsdm.wifinder.service.impl"})
 public class CrowdsensingController {
 
-    @Autowired
     private ServiceFactory serviceFactory;
 
     @RequestMapping(path="/find", method=POST)
     public FindOutput find(@RequestBody FindInput input) {
         return serviceFactory.getFindBestService().findBestHotspot(input);
+    }
+
+    @Autowired
+    public void setServiceFactory(ServiceFactory serviceFactory) {
+        this.serviceFactory = serviceFactory;
     }
 }

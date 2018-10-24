@@ -10,10 +10,14 @@ import insaif.rsdm.wifinder.service.FindBestService;
 @Component
 public class ServiceFactoryImpl implements ServiceFactory {
 
-    @Autowired
     private FindBestService findBestService;
 
     public FindBestService getFindBestService() {
         return findBestService;
+    }
+
+    @Autowired
+    public void setFindBestService(FindBestService findBestService) {
+        this.findBestService = findBestService;
     }
 }
