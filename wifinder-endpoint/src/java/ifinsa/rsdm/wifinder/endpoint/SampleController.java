@@ -9,7 +9,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class SampleController {
 
     @RequestMapping(path="/greeting", method = GET)
-    public String greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return name;
+    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
+        return new Greeting(1, name);
     }
 }
