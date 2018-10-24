@@ -12,6 +12,17 @@
     <artifactId>wifinder-endpoint</artifactId>
 
     <dependencies>
+        <!-- Project API -->
+        <dependency>
+            <groupId>insaif.rsdm</groupId>
+            <artifactId>wifinder-model</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>insaif.rsdm</groupId>
+            <artifactId>wifinder-service</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
 
         <!-- Third Party API -->
         <dependency>
@@ -19,6 +30,5 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>
