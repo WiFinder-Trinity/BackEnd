@@ -33,6 +33,11 @@ public class FindInput {
         this.longitude = longitude;
     }
 
+    public HotspotInformation getHotspot(int index)
+    {
+        return this.hotspots.get(index);
+    }
+
     public boolean addHotspot(HotspotInformation hotspot)
     {
         return this.hotspots.add(hotspot);

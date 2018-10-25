@@ -64,6 +64,11 @@ public class Hotspot {
         }
     }
 
+    public Location getLocation(int index)
+    {
+        return this.locations.get(index);
+    }
+
     public boolean addLocation(Location location)
     {
         return this.locations.add(location);
