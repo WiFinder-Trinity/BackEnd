@@ -1,4 +1,4 @@
-package ifinsa.rsdm.wifinder.model.back;
+package insaif.rsdm.wifinder.model.back;
 
 public class Location {
 

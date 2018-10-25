@@ -1,4 +1,4 @@
-package ifinsa.rsdm.wifinder.model.front;
+package insaif.rsdm.wifinder.model.front;
 
 public class FindOutput {
 

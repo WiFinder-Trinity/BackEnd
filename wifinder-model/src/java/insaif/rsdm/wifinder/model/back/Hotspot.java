@@ -1,4 +1,4 @@
-package ifinsa.rsdm.wifinder.model.back;
+package insaif.rsdm.wifinder.model.back;
 
 import java.util.ArrayList;
 import java.util.List;
