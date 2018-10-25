@@ -1,5 +1,6 @@
 package ifinsa.rsdm.wifinder.model.front;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FrontInput {
@@ -10,10 +11,10 @@ public class FrontInput {
 
     private List<HotspotInformation> hotspots;
 
-    public FrontInput(double latitude, double longitude, List<HotspotInformation> hotspots) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.hotspots = hotspots;
+    public FrontInput() {
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+        this.hotspots = new ArrayList<HotspotInformation>();
     }
 
     public double getLatitude() {
@@ -24,7 +25,26 @@ public class FrontInput {
         return longitude;
     }
 
-    public List<HotspotInformation> getHotspots() {
-        return hotspots;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public boolean addHotspot(HotspotInformation hotspot)
+    {
+        return this.hotspots.add(hotspot);
+    }
+
+    public boolean removeHotspot(HotspotInformation hotspot)
+    {
+        return this.hotspots.remove(hotspot);
+    }
+
+    public void removeHotspot(int index)
+    {
+        this.hotspots.remove(index);
     }
 }

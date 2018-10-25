@@ -8,12 +8,6 @@ public class Location {
 
     private int strengh;
 
-    public Location(double latitude, double longitude, int strengh) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.strengh = strengh;
-    }
-
     public double getLatitude() {
         return latitude;
     }
@@ -24,5 +18,17 @@ public class Location {
 
     public int getStrengh() {
         return strengh;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setStrengh(int strengh) {
+        this.strengh = strengh;
     }
 }

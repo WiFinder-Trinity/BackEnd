@@ -8,12 +8,6 @@ public class HotspotInformation {
 
     private int strengh;
 
-    public HotspotInformation(String bssid, String ssid, int strengh) {
-        this.bssid = bssid;
-        this.ssid = ssid;
-        this.strengh = strengh;
-    }
-
     public String getBssid() {
         return bssid;
     }
@@ -24,5 +18,17 @@ public class HotspotInformation {
 
     public int getStrengh() {
         return strengh;
+    }
+
+    public void setBssid(String bssid) {
+        this.bssid = bssid;
+    }
+
+    public void setSsid(String ssid) {
+        this.ssid = ssid;
+    }
+
+    public void setStrengh(int strengh) {
+        this.strengh = strengh;
     }
 }

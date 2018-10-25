@@ -6,16 +6,19 @@ public class FindOutput {
 
     private String bssid;
 
-    public FindOutput(String ssid, String bssid) {
-        this.ssid = ssid;
-        this.bssid = bssid;
-    }
-
     public String getSsid() {
         return ssid;
     }
 
     public String getBssid() {
         return bssid;
+    }
+
+    public void setSsid(String ssid) {
+        this.ssid = ssid;
+    }
+
+    public void setBssid(String bssid) {
+        this.bssid = bssid;
     }
 }
