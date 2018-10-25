@@ -6,7 +6,7 @@ public class Location {
 
     private double longitude;
 
-    private int strengh;
+    private int strength;
 
     public double getLatitude() {
         return latitude;
@@ -16,8 +16,8 @@ public class Location {
         return longitude;
     }
 
-    public int getStrengh() {
-        return strengh;
+    public int getStrength() {
+        return strength;
     }
 
     public void setLatitude(double latitude) {
@@ -28,7 +28,7 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public void setStrengh(int strengh) {
-        this.strengh = strengh;
+    public void setStrength(int strength) {
+        this.strength = strength;
     }
 }
