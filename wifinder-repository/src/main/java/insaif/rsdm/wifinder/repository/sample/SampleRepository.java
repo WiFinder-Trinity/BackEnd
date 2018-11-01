@@ -1,9 +1,9 @@
 package insaif.rsdm.wifinder.repository.sample;
 
 import insaif.rsdm.wifinder.model.sample.Sample;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository

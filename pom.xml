@@ -26,7 +26,7 @@
         <springframework-boot.version>2.0.5.RELEASE</springframework-boot.version>
         <springframework-restdocs.version>2.0.2.RELEASE</springframework-restdocs.version>
         <springframework-security.version>5.1.0.RELEASE</springframework-security.version>
-        <derby.version>10.14.2.0</derby.version>
+        <postgresql.version>42.2.5</postgresql.version>
     </properties>
 
     <dependencyManagement>
@@ -57,16 +57,19 @@
                 <version>${springframework-boot.version}</version>
             </dependency>
 
+            <!--PostgreSQL-->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+            </dependency>
+
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-devtools</artifactId>
                 <version>${springframework-boot.version}</version>
                 <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.derby</groupId>
-                <artifactId>derby</artifactId>
-                <version>${derby.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
