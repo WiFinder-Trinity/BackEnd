@@ -26,11 +26,17 @@
         <springframework-boot.version>2.0.5.RELEASE</springframework-boot.version>
         <springframework-restdocs.version>2.0.2.RELEASE</springframework-restdocs.version>
         <springframework-security.version>5.1.0.RELEASE</springframework-security.version>
+        <springframework.version>5.0.9.RELEASE</springframework.version>
         <postgresql.version>42.2.5</postgresql.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${springframework-boot.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -56,6 +62,16 @@
                 <artifactId>spring-session-core</artifactId>
                 <version>${springframework-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
 
             <!--PostgreSQL-->
             <dependency>
@@ -71,6 +87,7 @@
                 <version>${springframework-boot.version}</version>
                 <scope>runtime</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
@@ -97,6 +114,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springframework-boot.version}</version>
             </plugin>
         </plugins>
     </build>
