@@ -1,27 +1,27 @@
 package insaif.rsdm.wifinder.model.back;
 
-import java.util.ArrayList;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
+@Entity
 public class Hotspot {
 
+    @Id
     private String bssid;
 
     private String ssid;
 
     private int connectionCount;
 
+    @Embedded
+    @OneToMany
     private List<Location> locations;
 
+    @Embedded
     private Location computedLocation;
-
-    public Hotspot() {
-        this.bssid = "";
-        this.ssid = "";
-        this.connectionCount = 0;
-        this.locations = new ArrayList<Location>();
-        this.computedLocation = null;
-    }
 
     public String getBssid() {
         return bssid;
@@ -52,35 +52,22 @@ public class Hotspot {
     }
 
     public void setComputedLocation(Location computedLocation) throws IllegalArgumentException {
-
-        if (this.locations.contains(computedLocation)) {
-
-            this.computedLocation = computedLocation;
-
-        } else {
-
-            throw new IllegalArgumentException("Location (" + computedLocation.getLatitude() + ":" +
-                    computedLocation.getLongitude() + ") not in " + this.ssid + " hotspot locations list");
-        }
+        this.computedLocation = computedLocation;
     }
 
-    public Location getLocation(int index)
-    {
+    public Location getLocation(int index) {
         return this.locations.get(index);
     }
 
-    public boolean addLocation(Location location)
-    {
+    public boolean addLocation(Location location) {
         return this.locations.add(location);
     }
 
-    public boolean removeLocation(Location location)
-    {
+    public boolean removeLocation(Location location) {
         return this.locations.remove(location);
     }
 
-    public void removeLocation(int index)
-    {
+    public void removeLocation(int index) {
         this.locations.remove(index);
     }
 }

@@ -1,5 +1,8 @@
 package insaif.rsdm.wifinder.model.back;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Location {
 
     private double latitude;
