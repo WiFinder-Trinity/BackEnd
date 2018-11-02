@@ -1,27 +1,27 @@
 package insaif.rsdm.wifinder.model.back;
 
-import java.util.ArrayList;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
 import java.util.List;
 
+@Entity
 public class Hotspot {
 
+    @Id
     private String bssid;
 
     private String ssid;
 
-    private int connectionCount;
+    private Integer connectionCount;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Location> locations;
 
+    @Embedded
     private Location computedLocation;
-
-    public Hotspot() {
-        this.bssid = "";
-        this.ssid = "";
-        this.connectionCount = 0;
-        this.locations = new ArrayList<Location>();
-        this.computedLocation = null;
-    }
 
     public String getBssid() {
         return bssid;
@@ -31,7 +31,7 @@ public class Hotspot {
         return ssid;
     }
 
-    public int getConnectionCount() {
+    public Integer getConnectionCount() {
         return connectionCount;
     }
 
@@ -47,40 +47,35 @@ public class Hotspot {
         this.ssid = ssid;
     }
 
-    public void setConnectionCount(int connectionCount) {
+    public void setConnectionCount(Integer connectionCount) {
         this.connectionCount = connectionCount;
     }
 
-    public void setComputedLocation(Location computedLocation) throws IllegalArgumentException {
-
-        if (this.locations.contains(computedLocation)) {
-
-            this.computedLocation = computedLocation;
-
-        } else {
-
-            throw new IllegalArgumentException("Location (" + computedLocation.getLatitude() + ":" +
-                    computedLocation.getLongitude() + ") not in " + this.ssid + " hotspot locations list");
-        }
+    public List<Location> getLocations() {
+        return locations;
     }
 
-    public Location getLocation(int index)
-    {
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+
+    public void setComputedLocation(Location computedLocation) throws IllegalArgumentException {
+        this.computedLocation = computedLocation;
+    }
+
+    public Location getLocation(int index) {
         return this.locations.get(index);
     }
 
-    public boolean addLocation(Location location)
-    {
+    public boolean addLocation(Location location) {
         return this.locations.add(location);
     }
 
-    public boolean removeLocation(Location location)
-    {
+    public boolean removeLocation(Location location) {
         return this.locations.remove(location);
     }
 
-    public void removeLocation(int index)
-    {
+    public void removeLocation(int index) {
         this.locations.remove(index);
     }
 }
