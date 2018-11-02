@@ -5,17 +5,17 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Location {
 
-    private double latitude;
+    private Double latitude;
 
-    private double longitude;
+    private Double longitude;
 
-    private int strength;
+    private Integer strength;
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
@@ -23,11 +23,11 @@ public class Location {
         return strength;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

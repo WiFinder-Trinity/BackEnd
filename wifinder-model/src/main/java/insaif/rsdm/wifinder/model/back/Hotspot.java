@@ -1,9 +1,10 @@
 package insaif.rsdm.wifinder.model.back;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -14,10 +15,9 @@ public class Hotspot {
 
     private String ssid;
 
-    private int connectionCount;
+    private Integer connectionCount;
 
-    @Embedded
-    @OneToMany
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Location> locations;
 
     @Embedded
@@ -31,7 +31,7 @@ public class Hotspot {
         return ssid;
     }
 
-    public int getConnectionCount() {
+    public Integer getConnectionCount() {
         return connectionCount;
     }
 
@@ -47,8 +47,16 @@ public class Hotspot {
         this.ssid = ssid;
     }
 
-    public void setConnectionCount(int connectionCount) {
+    public void setConnectionCount(Integer connectionCount) {
         this.connectionCount = connectionCount;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 
     public void setComputedLocation(Location computedLocation) throws IllegalArgumentException {
