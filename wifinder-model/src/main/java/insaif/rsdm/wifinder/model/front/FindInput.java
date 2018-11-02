@@ -1,6 +1,5 @@
 package insaif.rsdm.wifinder.model.front;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FindInput {
@@ -11,12 +10,6 @@ public class FindInput {
 
     private List<HotspotInformation> hotspots;
 
-    public FindInput() {
-        this.latitude = 0.0;
-        this.longitude = 0.0;
-        this.hotspots = new ArrayList<HotspotInformation>();
-    }
-
     public double getLatitude() {
         return latitude;
     }
@@ -25,12 +18,20 @@ public class FindInput {
         return longitude;
     }
 
+    public List<HotspotInformation> getHotspots() {
+        return hotspots;
+    }
+
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public void setHotspots(List<HotspotInformation> hotspots) {
+        this.hotspots = hotspots;
     }
 
     public HotspotInformation getHotspot(int index)
