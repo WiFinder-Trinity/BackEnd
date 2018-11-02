@@ -11,5 +11,24 @@
 
     <artifactId>wifinder-service</artifactId>
 
+    <dependencies>
+        <!-- Project API -->
+        <dependency>
+            <groupId>insaif.rsdm</groupId>
+            <artifactId>wifinder-model</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>insaif.rsdm</groupId>
+            <artifactId>wifinder-repository</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <!-- Third-party API -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
