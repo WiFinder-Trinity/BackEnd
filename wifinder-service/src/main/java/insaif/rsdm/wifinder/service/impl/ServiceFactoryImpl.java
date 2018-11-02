@@ -1,11 +1,11 @@
 package insaif.rsdm.wifinder.service.impl;
 
 
+import insaif.rsdm.wifinder.service.FindBestService;
+import insaif.rsdm.wifinder.service.ServiceFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import insaif.rsdm.wifinder.service.ServiceFactory;
-import insaif.rsdm.wifinder.service.FindBestService;
 
 @Service
 public class ServiceFactoryImpl implements ServiceFactory {

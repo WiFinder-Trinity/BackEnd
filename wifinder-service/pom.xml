@@ -16,7 +16,12 @@
         <dependency>
             <groupId>insaif.rsdm</groupId>
             <artifactId>wifinder-model</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>insaif.rsdm</groupId>
+            <artifactId>wifinder-repository</artifactId>
+            <version>${parent.version}</version>
         </dependency>
 
         <!-- Third-party API -->
