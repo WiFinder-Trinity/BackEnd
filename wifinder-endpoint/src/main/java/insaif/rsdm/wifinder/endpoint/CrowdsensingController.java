@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -32,7 +33,7 @@ public class CrowdsensingController {
     }
 
     @RequestMapping(path = "/find", method = POST)
-    public FindOutput find(@RequestBody FindInput input) {
+    public FindOutput find(@Valid @RequestBody FindInput input) {
 
         log.debug("find service is called");
 

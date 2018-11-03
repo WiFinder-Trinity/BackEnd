@@ -1,13 +1,18 @@
 package insaif.rsdm.wifinder.model.front;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class FindInput {
 
+    @NotNull
     private double latitude;
 
+    @NotNull
     private double longitude;
 
+    @Valid
     private List<HotspotInformation> hotspots;
 
     public double getLatitude() {

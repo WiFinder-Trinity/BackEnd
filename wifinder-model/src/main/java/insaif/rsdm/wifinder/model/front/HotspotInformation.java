@@ -1,11 +1,16 @@
 package insaif.rsdm.wifinder.model.front;
 
+import javax.validation.constraints.NotNull;
+
 public class HotspotInformation {
 
+    @NotNull
     private String bssid;
 
+    @NotNull
     private String ssid;
 
+    @NotNull
     private int strength;
 
     public String getBssid() {
