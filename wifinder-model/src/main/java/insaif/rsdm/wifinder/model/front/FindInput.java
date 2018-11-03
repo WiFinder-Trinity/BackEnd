@@ -7,19 +7,19 @@ import java.util.List;
 public class FindInput {
 
     @NotNull
-    private double latitude;
+    private Double latitude;
 
     @NotNull
-    private double longitude;
+    private Double longitude;
 
     @Valid
     private List<HotspotInformation> hotspots;
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
@@ -27,11 +27,11 @@ public class FindInput {
         return hotspots;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 

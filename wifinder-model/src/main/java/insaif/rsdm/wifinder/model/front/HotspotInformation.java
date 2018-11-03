@@ -11,7 +11,7 @@ public class HotspotInformation {
     private String ssid;
 
     @NotNull
-    private int strength;
+    private Integer strength;
 
     public String getBssid() {
         return bssid;
@@ -21,7 +21,7 @@ public class HotspotInformation {
         return ssid;
     }
 
-    public int getStrength() {
+    public Integer getStrength() {
         return strength;
     }
 
@@ -33,7 +33,7 @@ public class HotspotInformation {
         this.ssid = ssid;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(Integer strength) {
         this.strength = strength;
     }
 }
