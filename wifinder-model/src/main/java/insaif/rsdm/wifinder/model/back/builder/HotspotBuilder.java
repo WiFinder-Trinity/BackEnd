@@ -9,7 +9,7 @@ public class HotspotBuilder {
 
     private String bssid = null;
     private String ssid = null;
-    private int connectionCount;
+    private int connectionCount = 0;
     private Location computedLocation = null;
     private List<Location> locations = null;
 
