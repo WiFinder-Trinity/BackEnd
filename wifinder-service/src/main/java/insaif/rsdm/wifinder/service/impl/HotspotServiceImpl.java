@@ -10,6 +10,8 @@ import insaif.rsdm.wifinder.model.front.HotspotInformation;
 import insaif.rsdm.wifinder.repository.hotspot.HotspotRepository;
 import insaif.rsdm.wifinder.service.HotspotService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Collections;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class HotspotServiceImpl implements HotspotService {
+
+    private static final Logger log = LoggerFactory.getLogger(HotspotService.class);
 
     private HotspotRepository hotspotRepository;
 
@@ -34,13 +38,14 @@ public class HotspotServiceImpl implements HotspotService {
 //        findOutput.setBssid(hotspot.getBssid());
 //        findOutput.setSsid(hotspot.getSsid());
 
-        //TODO: input must be converted into list of Hotspot : search into database if exist, else create it
+        log.debug("findBestHotspot service is called with {} hotspots", input.getHotspots().size());
+
         List<Hotspot> hotspots = inputToHotspotList(input);
 
-        //TODO: choose the best Hotspot among the previously created list
         Hotspot bestHotspot = pickBestHotspotFromList(hotspots);
 
-        //TODO: create a FindOutput
+        log.debug("Best Hotspot was found successfully, bssid : {}", bestHotspot.getBssid());
+
         return hotspotToOutput(bestHotspot);
     }
 
@@ -63,6 +68,7 @@ public class HotspotServiceImpl implements HotspotService {
                                            .build();
         Hotspot hotspot = hotspotRepository.findById(hotspotInformation.getBssid()).get();
         hotspot.getLocations().add(location);
+
         //TODO: Recompute "real" location
 
         return hotspotRepository.save(hotspot);
@@ -82,6 +88,7 @@ public class HotspotServiceImpl implements HotspotService {
         return hotspotRepository.save(hotspot);
     }
 
+    //TODO: Implement a best version !
     private Hotspot pickBestHotspotFromList(List<Hotspot> hotspots) {
         return hotspots.stream().max(Comparator.comparing(Hotspot::getConnectionCount)).get();
     }
