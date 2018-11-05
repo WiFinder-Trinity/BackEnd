@@ -27,8 +27,8 @@ public class CrowdsensingController {
     private HotspotService hotspotService;
 
     @Autowired
-    public CrowdsensingController(SampleService SampleService, HotspotService hotspotService) {
-        this.sampleService = SampleService;
+    public CrowdsensingController(SampleService sampleService, HotspotService hotspotService) {
+        this.sampleService = sampleService;
         this.hotspotService = hotspotService;
     }
 
@@ -38,6 +38,18 @@ public class CrowdsensingController {
         log.debug("find service is called");
 
         return hotspotService.findBestHotspot(input);
+    }
+
+    @RequestMapping(path = "/connect", method = POST)
+    public void connect(@Valid @RequestBody String input) {
+        log.debug("connect service called");
+        hotspotService.signalHotspotConnection(input);
+    }
+
+    @RequestMapping(path = "/disconnect", method = POST)
+    public void disconnect(@Valid @RequestBody String input) {
+        log.debug("disconnect service called");
+        hotspotService.signalHotspotDisconnection(input);
     }
 
     @RequestMapping(path = "/test/{name}", method = GET)

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,6 +48,54 @@ public class HotspotServiceImpl implements HotspotService {
         log.debug("Best Hotspot was found successfully, bssid : {}", bestHotspot.getBssid());
 
         return hotspotToOutput(bestHotspot);
+    }
+
+    @Override
+    public void signalHotspotConnection(String input) {
+
+        log.debug("signalHotspotConnection service is called for the hotspot with BSSID : " + input);
+
+        Optional<Hotspot> optionalHotspot = hotspotRepository.findById(input);
+
+        // if Hotspot in the database, adds a connection count to it
+        if (optionalHotspot.isPresent()) {
+            Hotspot hotspot = optionalHotspot.get();
+            hotspot.setConnectionCount(hotspot.getConnectionCount() + 1);
+
+            hotspotRepository.save(hotspot);
+            log.debug("connection added, hotspot with BSSID : " + input + " has now " + hotspot.getConnectionCount() +
+                    " connections");
+        // else does nothing, TODO: improve it for instance by asking for Hotspot information
+        } else {
+            log.error("Hotspot with BSSID : " + input + " not found in database");
+        }
+    }
+
+    @Override
+    public void signalHotspotDisconnection(String input) {
+
+        log.debug("signalHotspotConnection service is called for the hotspot with BSSID : " + input);
+
+        Optional<Hotspot> optionalHotspot = hotspotRepository.findById(input);
+
+        // if Hotspot in the database, removes a connection count to it
+        if (optionalHotspot.isPresent()) {
+            Hotspot hotspot = optionalHotspot.get();
+
+            if (hotspot.getConnectionCount() > 0) {
+                hotspot.setConnectionCount(hotspot.getConnectionCount() - 1);
+                hotspotRepository.save(hotspot);
+                log.debug("Connection removed, hotspot with BSSID : " + input + " has now " +
+                        hotspot.getConnectionCount() + " connections");
+            } else {
+                log.debug("Connection not removed because hotspot with BSSID : " + input + " has already " +
+                        hotspot.getConnectionCount() + " connections");
+            }
+
+        // else does nothing, TODO: improve it for instance by asking for Hotspot information
+        } else {
+            log.error("Hotspot with BSSID : " + input + " not found in database");
+        }
     }
 
     private List<Hotspot> inputToHotspotList(FindInput input) {
