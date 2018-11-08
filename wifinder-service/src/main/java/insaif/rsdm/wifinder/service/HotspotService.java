@@ -6,4 +6,8 @@ import insaif.rsdm.wifinder.model.front.FindOutput;
 public interface HotspotService {
 
     FindOutput findBestHotspot(FindInput input);
+
+    void signalHotspotConnection(String input);
+
+    void signalHotspotDisconnection(String input);
 }
