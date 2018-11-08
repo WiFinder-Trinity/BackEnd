@@ -1,36 +1,42 @@
 package insaif.rsdm.wifinder.model.front;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class FindInput {
 
-    private double latitude;
+    @NotNull
+    private Double latitude;
 
-    private double longitude;
+    @NotNull
+    private Double longitude;
 
+    @Valid
     private List<HotspotInformation> hotspots;
 
-    public FindInput() {
-        this.latitude = 0.0;
-        this.longitude = 0.0;
-        this.hotspots = new ArrayList<HotspotInformation>();
-    }
-
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLatitude(double latitude) {
+    public List<HotspotInformation> getHotspots() {
+        return hotspots;
+    }
+
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public void setHotspots(List<HotspotInformation> hotspots) {
+        this.hotspots = hotspots;
     }
 
     public HotspotInformation getHotspot(int index)

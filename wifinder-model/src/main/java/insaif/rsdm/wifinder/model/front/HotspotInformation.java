@@ -1,12 +1,17 @@
 package insaif.rsdm.wifinder.model.front;
 
+import javax.validation.constraints.NotNull;
+
 public class HotspotInformation {
 
+    @NotNull
     private String bssid;
 
+    @NotNull
     private String ssid;
 
-    private int strength;
+    @NotNull
+    private Integer strength;
 
     public String getBssid() {
         return bssid;
@@ -16,7 +21,7 @@ public class HotspotInformation {
         return ssid;
     }
 
-    public int getStrength() {
+    public Integer getStrength() {
         return strength;
     }
 
@@ -28,7 +33,7 @@ public class HotspotInformation {
         this.ssid = ssid;
     }
 
-    public void setStrength(int strength) {
+    public void setStrength(Integer strength) {
         this.strength = strength;
     }
 }
