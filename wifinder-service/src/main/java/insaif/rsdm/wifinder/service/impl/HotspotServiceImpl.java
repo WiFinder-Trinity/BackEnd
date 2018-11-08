@@ -4,6 +4,7 @@ import insaif.rsdm.wifinder.model.back.Hotspot;
 import insaif.rsdm.wifinder.model.back.Location;
 import insaif.rsdm.wifinder.model.back.builder.HotspotBuilder;
 import insaif.rsdm.wifinder.model.back.builder.LocationBuilder;
+import insaif.rsdm.wifinder.model.front.ConncectionInput;
 import insaif.rsdm.wifinder.model.front.FindInput;
 import insaif.rsdm.wifinder.model.front.FindOutput;
 import insaif.rsdm.wifinder.model.front.HotspotInformation;
@@ -47,11 +48,11 @@ public class HotspotServiceImpl implements HotspotService {
     }
 
     @Override
-    public void signalHotspotConnection(String input) {
+    public void signalHotspotConnection(ConncectionInput input) {
 
-        log.debug("signalHotspotConnection service is called for the hotspot with BSSID : " + input);
+        log.debug("signalHotspotConnection service is called for the hotspot with BSSID : {}", input.getBssid());
 
-        Optional<Hotspot> optionalHotspot = hotspotRepository.findById(input);
+        Optional<Hotspot> optionalHotspot = hotspotRepository.findById(input.getBssid());
 
         // if Hotspot in the database, adds a connection count to it
         if (optionalHotspot.isPresent()) {
@@ -59,20 +60,21 @@ public class HotspotServiceImpl implements HotspotService {
             hotspot.setConnectionCount(hotspot.getConnectionCount() + 1);
 
             hotspotRepository.save(hotspot);
-            log.debug("connection added, hotspot with BSSID : " + input + " has now " + hotspot.getConnectionCount() +
-                    " connections");
+            log.debug("Connection added, hotspot with BSSID : {} has now {} connection(s)",
+                    input.getBssid(),
+                    hotspot.getConnectionCount());
             // else does nothing, TODO: improve it for instance by asking for Hotspot information
         } else {
-            log.error("Hotspot with BSSID : " + input + " not found in database");
+            log.error("Hotspot with BSSID : {} not found in database", input.getBssid());
         }
     }
 
     @Override
-    public void signalHotspotDisconnection(String input) {
+    public void signalHotspotDisconnection(ConncectionInput input) {
 
-        log.debug("signalHotspotConnection service is called for the hotspot with BSSID : " + input);
+        log.debug("signalHotspotConnection service is called for the hotspot with BSSID : {}", input.getBssid());
 
-        Optional<Hotspot> optionalHotspot = hotspotRepository.findById(input);
+        Optional<Hotspot> optionalHotspot = hotspotRepository.findById(input.getBssid());
 
         // if Hotspot in the database, removes a connection count to it
         if (optionalHotspot.isPresent()) {
@@ -81,16 +83,17 @@ public class HotspotServiceImpl implements HotspotService {
             if (hotspot.getConnectionCount() > 0) {
                 hotspot.setConnectionCount(hotspot.getConnectionCount() - 1);
                 hotspotRepository.save(hotspot);
-                log.debug("Connection removed, hotspot with BSSID : " + input + " has now " +
-                        hotspot.getConnectionCount() + " connections");
+                log.debug("Connection removed, hotspot with BSSID : {} has now {} connection(s)",
+                        input.getBssid(),
+                        hotspot.getConnectionCount());
             } else {
-                log.debug("Connection not removed because hotspot with BSSID : " + input + " has already " +
-                        hotspot.getConnectionCount() + " connections");
+                log.debug("Connection not removed because hotspot with BSSID : {} has already no connection",
+                        input.getBssid());
             }
 
             // else does nothing, TODO: improve it for instance by asking for Hotspot information
         } else {
-            log.error("Hotspot with BSSID : " + input + " not found in database");
+            log.error("Hotspot with BSSID : {} not found in database", input.getBssid());
         }
     }
 
