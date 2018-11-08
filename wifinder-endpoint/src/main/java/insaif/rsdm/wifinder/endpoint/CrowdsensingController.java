@@ -33,7 +33,7 @@ public class CrowdsensingController {
     }
 
     @RequestMapping(path = "/find", method = POST)
-    public FindOutput find(@Valid @RequestBody FindInput input) {
+    public FindOutput find(@Valid @RequestBody FindInput input) throws Exception {
 
         log.debug("find service is called");
 

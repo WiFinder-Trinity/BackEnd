@@ -32,22 +32,18 @@ public class HotspotServiceImpl implements HotspotService {
         this.hotspotRepository = hotspotRepository;
     }
 
-    public FindOutput findBestHotspot(FindInput input) {
-//        HotspotInformation hotspot = input.getHotspot(0);
-//
-//        FindOutput findOutput = new FindOutput();
-//        findOutput.setBssid(hotspot.getBssid());
-//        findOutput.setSsid(hotspot.getSsid());
+    @Override
+    public FindOutput findBestHotspot(FindInput input) throws Exception {
 
         log.debug("findBestHotspot service is called with {} hotspots", input.getHotspots().size());
 
         List<Hotspot> hotspots = inputToHotspotList(input);
 
-        Hotspot bestHotspot = pickBestHotspotFromList(hotspots);
+        HotspotInformation bestHotspot = pickBestHotspotFromList(hotspots, input);
 
         log.debug("Best Hotspot was found successfully, bssid : {}", bestHotspot.getBssid());
 
-        return hotspotToOutput(bestHotspot);
+        return hotspotInfoToOutput(bestHotspot);
     }
 
     @Override
@@ -65,7 +61,7 @@ public class HotspotServiceImpl implements HotspotService {
             hotspotRepository.save(hotspot);
             log.debug("connection added, hotspot with BSSID : " + input + " has now " + hotspot.getConnectionCount() +
                     " connections");
-        // else does nothing, TODO: improve it for instance by asking for Hotspot information
+            // else does nothing, TODO: improve it for instance by asking for Hotspot information
         } else {
             log.error("Hotspot with BSSID : " + input + " not found in database");
         }
@@ -92,7 +88,7 @@ public class HotspotServiceImpl implements HotspotService {
                         hotspot.getConnectionCount() + " connections");
             }
 
-        // else does nothing, TODO: improve it for instance by asking for Hotspot information
+            // else does nothing, TODO: improve it for instance by asking for Hotspot information
         } else {
             log.error("Hotspot with BSSID : " + input + " not found in database");
         }
@@ -137,12 +133,43 @@ public class HotspotServiceImpl implements HotspotService {
         return hotspotRepository.save(hotspot);
     }
 
-    //TODO: Implement a best version !
-    private Hotspot pickBestHotspotFromList(List<Hotspot> hotspots) {
-        return hotspots.stream().max(Comparator.comparing(Hotspot::getConnectionCount)).get();
+    private HotspotInformation pickBestHotspotFromList(List<Hotspot> hotspots, FindInput input) throws Exception {
+        List<HotspotInformation> inputInfo = input.getHotspots();
+
+        List<HotspotInformation> sortedInfo = inputInfo.stream()
+                                                       .sorted(Comparator.comparing(HotspotInformation::getStrength)
+                                                                         .reversed())
+                                                       .collect(Collectors.toList());
+
+        // we take the less crowded hotpots
+        Hotspot minCrowded = Collections.min(hotspots, Comparator.comparing(Hotspot::getConnectionCount));
+        List<Hotspot> lessCrowded = hotspots.stream()
+                                            .filter(h -> h.getConnectionCount() <= minCrowded.getConnectionCount())
+                                            .collect(Collectors.toList());
+
+
+        // we take the strongest among them
+        HotspotInformation strongest = picktTheStrongest(lessCrowded, sortedInfo);
+
+        if (strongest == null) {
+            throw new Exception("Something bad happened !");
+        }
+
+        return strongest;
     }
 
-    private FindOutput hotspotToOutput(Hotspot hotspot) {
+    private HotspotInformation picktTheStrongest(List<Hotspot> hotspotList, List<HotspotInformation> sortedInfo) {
+        for (HotspotInformation info : sortedInfo) {
+            for (Hotspot hotspot : hotspotList) {
+                if (info.getBssid().equals(hotspot.getBssid())) {
+                    return info;
+                }
+            }
+        }
+        return null;
+    }
+
+    private FindOutput hotspotInfoToOutput(HotspotInformation hotspot) {
         FindOutput output = new FindOutput();
         output.setBssid(hotspot.getBssid());
         output.setSsid(hotspot.getSsid());
