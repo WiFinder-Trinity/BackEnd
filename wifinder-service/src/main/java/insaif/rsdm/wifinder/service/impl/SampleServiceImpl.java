@@ -27,10 +27,10 @@ public class SampleServiceImpl implements SampleService {
 
         log.debug("Creating new sample with name {}", name);
 
-        Sample created = sampleRepository.save(sample);
+        //Sample created = sampleRepository.save(sample);
 
-        log.debug("Sample named {} have been created with id : {}", sample.getName(), created.getId());
+        //log.debug("Sample named {} have been created with id : {}", sample.getName(), created.getId());
 
-        return created;
+        return sample;
     }
 }
