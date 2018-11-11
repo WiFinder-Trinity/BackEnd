@@ -2,7 +2,7 @@ package insaif.rsdm.wifinder.model.front;
 
 import javax.validation.constraints.NotNull;
 
-public class ConncectionInput {
+public class ConnectionInput {
 
     @NotNull
     private String bssid;

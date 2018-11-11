@@ -4,7 +4,7 @@ import insaif.rsdm.wifinder.model.back.Hotspot;
 import insaif.rsdm.wifinder.model.back.Location;
 import insaif.rsdm.wifinder.model.back.builder.HotspotBuilder;
 import insaif.rsdm.wifinder.model.back.builder.LocationBuilder;
-import insaif.rsdm.wifinder.model.front.ConncectionInput;
+import insaif.rsdm.wifinder.model.front.ConnectionInput;
 import insaif.rsdm.wifinder.model.front.FindInput;
 import insaif.rsdm.wifinder.model.front.FindOutput;
 import insaif.rsdm.wifinder.model.front.HotspotInformation;
@@ -48,7 +48,7 @@ public class HotspotServiceImpl implements HotspotService {
     }
 
     @Override
-    public void signalHotspotConnection(ConncectionInput input) {
+    public void signalHotspotConnection(ConnectionInput input) {
 
         log.debug("signalHotspotConnection service is called for the hotspot with BSSID : {}", input.getBssid());
 
@@ -70,7 +70,7 @@ public class HotspotServiceImpl implements HotspotService {
     }
 
     @Override
-    public void signalHotspotDisconnection(ConncectionInput input) {
+    public void signalHotspotDisconnection(ConnectionInput input) {
 
         log.debug("signalHotspotConnection service is called for the hotspot with BSSID : {}", input.getBssid());
 
