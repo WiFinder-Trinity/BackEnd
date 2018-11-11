@@ -1,6 +1,6 @@
 package insaif.rsdm.wifinder.endpoint;
 
-import insaif.rsdm.wifinder.model.front.ConncectionInput;
+import insaif.rsdm.wifinder.model.front.ConnectionInput;
 import insaif.rsdm.wifinder.model.front.FindInput;
 import insaif.rsdm.wifinder.model.front.FindOutput;
 import insaif.rsdm.wifinder.model.sample.Sample;
@@ -42,13 +42,13 @@ public class CrowdsensingController {
     }
 
     @RequestMapping(path = "/connect", method = POST)
-    public void connect(@Valid @RequestBody ConncectionInput input) {
+    public void connect(@Valid @RequestBody ConnectionInput input) {
         log.debug("connect service called");
         hotspotService.signalHotspotConnection(input);
     }
 
     @RequestMapping(path = "/disconnect", method = POST)
-    public void disconnect(@Valid @RequestBody ConncectionInput input) {
+    public void disconnect(@Valid @RequestBody ConnectionInput input) {
         log.debug("disconnect service called");
         hotspotService.signalHotspotDisconnection(input);
     }
