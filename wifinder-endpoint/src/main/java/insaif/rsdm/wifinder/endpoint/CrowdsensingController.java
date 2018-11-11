@@ -3,9 +3,7 @@ package insaif.rsdm.wifinder.endpoint;
 import insaif.rsdm.wifinder.model.front.ConncectionInput;
 import insaif.rsdm.wifinder.model.front.FindInput;
 import insaif.rsdm.wifinder.model.front.FindOutput;
-import insaif.rsdm.wifinder.model.sample.Sample;
 import insaif.rsdm.wifinder.service.HotspotService;
-import insaif.rsdm.wifinder.service.SampleService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +22,10 @@ public class CrowdsensingController {
 
     private static final Logger log = LoggerFactory.getLogger(CrowdsensingController.class);
 
-    private SampleService sampleService;
     private HotspotService hotspotService;
 
     @Autowired
-    public CrowdsensingController(SampleService sampleService, HotspotService hotspotService) {
-        this.sampleService = sampleService;
+    public CrowdsensingController(HotspotService hotspotService) {
         this.hotspotService = hotspotService;
     }
 
@@ -53,9 +49,9 @@ public class CrowdsensingController {
         hotspotService.signalHotspotDisconnection(input);
     }
 
-    @RequestMapping(path = "/test/{name}", method = GET)
-    public Sample test(@PathVariable String name) {
-        log.debug("test is called with {}", name);
-        return sampleService.createSample(name);
+    @RequestMapping(path = "/test/{text}", method = GET)
+    public String test(@PathVariable String text) {
+        log.debug("test is called with {}", text);
+        return "<h1>" + text + "</h1>";
     }
 }
