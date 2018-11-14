@@ -4,8 +4,11 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://wifinderdb.cqfumk5mvaun.eu-west-3.rds.amazonaws.com:5432/aws_wifinder_db
     url: jdbc:postgresql://localhost:5432/wifinderDB
+#    username: wifinder_user
     username: WIFINDER
+#    password: wifound_aws
     password: wifound
 
   jpa:
@@ -15,7 +18,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        show_sql: true
+#        show_sql: true
         jdbc.lob.non_contextual_creation: true
 
     database: postgresql
