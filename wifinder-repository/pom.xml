@@ -24,11 +24,14 @@
     </build>
 
     <dependencies>
+        <!-- Project dependencies -->
         <dependency>
             <groupId>insaif.rsdm</groupId>
             <artifactId>wifinder-model</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
+
+        <!-- Spring framework dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -38,6 +41,7 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -49,6 +53,7 @@
             <version>1.4.197</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
 
