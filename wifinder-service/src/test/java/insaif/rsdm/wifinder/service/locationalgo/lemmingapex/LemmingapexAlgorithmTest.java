@@ -6,10 +6,12 @@ import insaif.rsdm.wifinder.model.back.builder.HotspotBuilder;
 import insaif.rsdm.wifinder.model.back.builder.LocationBuilder;
 import insaif.rsdm.wifinder.service.TestApplication;
 
+import insaif.rsdm.wifinder.service.locationalgo.LocationAlgorithm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -35,8 +37,45 @@ public class LemmingapexAlgorithmTest {
      */
     private final static double WIFI_FREQ = 5000;
 
+    @Autowired
+    LocationAlgorithm locationAlgorithm;
+
     @Test
-    public void computeLocation_From6UsersLocations() {
+    public void computeLocation_From2UsersLocations_Null()
+    {
+        // data from https://appelsiini.net/2017/trilateration-with-n-points/
+        ArrayList<Location> locations = new ArrayList<>();
+
+        locations.add(LocationBuilder.get()
+                .setLatitude(59.42606837)
+                .setLongitude(24.72553151)
+                .setStrength(distanceToStrength(8.0))
+                .build());
+        locations.add(LocationBuilder.get()
+                .setLatitude(59.42610146)
+                .setLongitude(24.72552969)
+                .setStrength(distanceToStrength(8.0))
+                .build());
+
+        Hotspot hotspot = HotspotBuilder.get()
+                .setSsid("test ssid")
+                .setBssid("test bssid")
+                .setConnectionCount(4)
+                .setLocations(locations)
+                .setComputedLocation(null)
+                .build();
+
+        Location location = locationAlgorithm.computeLocation(hotspot);
+
+        Location computedLocation = hotspot.getComputedLocation();
+
+        assertThat(computedLocation).isNull();
+        assertThat(location).isNull();
+        assertThat(computedLocation).isEqualTo(location);
+    }
+
+    @Test
+    public void computeLocation_From6UsersLocations_GoodCoordinatesResult() {
 
         // data from https://appelsiini.net/2017/trilateration-with-n-points/
         ArrayList<Location> locations = new ArrayList<>();
@@ -80,8 +119,7 @@ public class LemmingapexAlgorithmTest {
                 .setComputedLocation(null)
                 .build();
 
-        LemmingapexAlgorithm lemmingapexAlgorithm = new LemmingapexAlgorithm();
-        Location location = lemmingapexAlgorithm.computeLocation(hotspot);
+        Location location = locationAlgorithm.computeLocation(hotspot);
 
         Location computedLocation = hotspot.getComputedLocation();
 
@@ -95,6 +133,6 @@ public class LemmingapexAlgorithmTest {
     }
 
     private int distanceToStrength(double distance) {
-        return (int)(20 * (Math.log10(distance) + Math.log10(WIFI_FREQ)) - FSPL_CONST_M_MHZ);
+        return (int) (20 * (Math.log10(distance) + Math.log10(WIFI_FREQ)) - FSPL_CONST_M_MHZ);
     }
 }

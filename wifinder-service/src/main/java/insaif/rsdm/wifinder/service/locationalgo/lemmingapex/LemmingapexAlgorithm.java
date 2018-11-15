@@ -28,15 +28,20 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
 
     /**
      * The standard WiFi frequency in MHz
-     * TODO : add this to the model and collect ot from the mobile app
+     * TODO : add this to the model and collect ot from the front-end
      */
     private final static double WIFI_FREQ = 5000;
 
     @Override
-    public Location computeLocation(Hotspot hotspot) {
+    public Location computeLocation(@NotNull Hotspot hotspot) {
 
         List<Location> locations = hotspot.getLocations();
         int size = locations.size();
+
+        if (size < 3) {
+            return null;
+        }
+
         double[][] positions = new double[size][2];
         double[] distances = new double[size];
 
