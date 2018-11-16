@@ -1,14 +1,12 @@
 package insaif.rsdm.wifinder.service.impl;
 
 import insaif.rsdm.wifinder.model.back.Hotspot;
-import insaif.rsdm.wifinder.model.back.Location;
-import insaif.rsdm.wifinder.model.back.builder.HotspotBuilder;
-import insaif.rsdm.wifinder.model.back.builder.LocationBuilder;
 import insaif.rsdm.wifinder.model.front.ConnectionInput;
 import insaif.rsdm.wifinder.model.front.FindInput;
 import insaif.rsdm.wifinder.model.front.FindOutput;
 import insaif.rsdm.wifinder.model.front.HotspotInformation;
 import insaif.rsdm.wifinder.repository.hotspot.HotspotRepository;
+import insaif.rsdm.wifinder.service.HotspotPersistence;
 import insaif.rsdm.wifinder.service.HotspotService;
 
 import org.slf4j.Logger;
@@ -28,9 +26,12 @@ public class HotspotServiceImpl implements HotspotService {
 
     private HotspotRepository hotspotRepository;
 
+    private HotspotPersistence hotspotPersistence;
+
     @Autowired
-    public HotspotServiceImpl(HotspotRepository hotspotRepository) {
+    public HotspotServiceImpl(HotspotRepository hotspotRepository, HotspotPersistence hotspotPersistence) {
         this.hotspotRepository = hotspotRepository;
+        this.hotspotPersistence = hotspotPersistence;
     }
 
     @Override
@@ -63,7 +64,7 @@ public class HotspotServiceImpl implements HotspotService {
             log.debug("Connection added, hotspot with BSSID : {} has now {} connection(s)",
                     input.getBssid(),
                     hotspot.getConnectionCount());
-            // else does nothing, TODO: improve it for instance by asking for Hotspot information
+        // else does nothing, TODO: improve it by asking the front-end for instance for Hotspot information
         } else {
             log.error("Hotspot with BSSID : {} not found in database", input.getBssid());
         }
@@ -91,49 +92,24 @@ public class HotspotServiceImpl implements HotspotService {
                         input.getBssid());
             }
 
-            // else does nothing, TODO: improve it for instance by asking for Hotspot information
+        // else does nothing, TODO: improve it for instance by asking for Hotspot information
         } else {
             log.error("Hotspot with BSSID : {} not found in database", input.getBssid());
         }
     }
 
+    /**
+     * Persists location of an input from the front-end and give the corresponding hotspots list
+     * @param input the input from the front-end, containing the location to persist and the hotspots with their
+     *              respective strength
+     * @return the list of the well-persisted hotspots
+     */
     private List<Hotspot> inputToHotspotList(FindInput input) {
         List<HotspotInformation> hotspotInformations = input.getHotspots();
 
-        return hotspotInformations.stream().map(hotspotInformation -> {
-            if (hotspotRepository.existsById(hotspotInformation.getBssid()))
-                return updateExistingHotspot(hotspotInformation, input);
-            else
-                return addNewHotspot(hotspotInformation, input);
-        }).collect(Collectors.toList());
-    }
-
-    private Hotspot updateExistingHotspot(HotspotInformation hotspotInformation, FindInput input) {
-        Location location = LocationBuilder.get()
-                                           .setLatitude(input.getLatitude())
-                                           .setLongitude(input.getLongitude())
-                                           .setStrength(hotspotInformation.getStrength())
-                                           .build();
-        Hotspot hotspot = hotspotRepository.findById(hotspotInformation.getBssid()).get();
-        hotspot.getLocations().add(location);
-
-        //TODO: Recompute "real" location
-
-        return hotspotRepository.save(hotspot);
-    }
-
-    private Hotspot addNewHotspot(HotspotInformation hotspotInformation, FindInput input) {
-        Location location = LocationBuilder.get()
-                                           .setLatitude(input.getLatitude())
-                                           .setLongitude(input.getLongitude())
-                                           .setStrength(hotspotInformation.getStrength())
-                                           .build();
-        Hotspot hotspot = HotspotBuilder.get()
-                                        .setBssid(hotspotInformation.getBssid())
-                                        .setSsid(hotspotInformation.getSsid())
-                                        .setLocations(Collections.singletonList(location))
-                                        .build();
-        return hotspotRepository.save(hotspot);
+        return hotspotInformations.stream().map(hotspotInformation ->
+                hotspotPersistence.addOrUpdateHotspot(input, hotspotInformation))
+                .collect(Collectors.toList());
     }
 
     private HotspotInformation pickBestHotspotFromList(List<Hotspot> hotspots, FindInput input) throws Exception {
@@ -147,12 +123,12 @@ public class HotspotServiceImpl implements HotspotService {
         // we take the less crowded hotpots
         Hotspot minCrowded = Collections.min(hotspots, Comparator.comparing(Hotspot::getConnectionCount));
         List<Hotspot> lessCrowded = hotspots.stream()
-                                            .filter(h -> h.getConnectionCount() <= minCrowded.getConnectionCount())
+                                            .filter(h -> (h.getConnectionCount() <= minCrowded.getConnectionCount()))
                                             .collect(Collectors.toList());
 
 
         // we take the strongest among them
-        HotspotInformation strongest = picktTheStrongest(lessCrowded, sortedInfo);
+        HotspotInformation strongest = pickTheStrongest(lessCrowded, sortedInfo);
 
         if (strongest == null) {
             throw new Exception("Something bad happened !");
@@ -161,7 +137,7 @@ public class HotspotServiceImpl implements HotspotService {
         return strongest;
     }
 
-    private HotspotInformation picktTheStrongest(List<Hotspot> hotspotList, List<HotspotInformation> sortedInfo) {
+    private HotspotInformation pickTheStrongest(List<Hotspot> hotspotList, List<HotspotInformation> sortedInfo) {
         for (HotspotInformation info : sortedInfo) {
             for (Hotspot hotspot : hotspotList) {
                 if (info.getBssid().equals(hotspot.getBssid())) {

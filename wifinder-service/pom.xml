@@ -10,25 +10,46 @@
     </parent>
 
     <artifactId>wifinder-service</artifactId>
+
     <dependencies>
-        <!-- Project API -->
+        <!-- Project dependencies -->
         <dependency>
             <groupId>insaif.rsdm</groupId>
             <artifactId>wifinder-model</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>insaif.rsdm</groupId>
             <artifactId>wifinder-repository</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
-        <!-- Third-party API -->
+        <!-- Spring framework dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+
+        <!-- Third-party dependencies -->
+        <dependency>
+            <groupId>com.lemmingapex.trilateration</groupId>
+            <artifactId>trilateration</artifactId>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.h2database</groupId>-->
+            <!--<artifactId>h2</artifactId>-->
+            <!--<version>1.4.197</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
     </dependencies>
+
 
     <build>
         <plugins>
