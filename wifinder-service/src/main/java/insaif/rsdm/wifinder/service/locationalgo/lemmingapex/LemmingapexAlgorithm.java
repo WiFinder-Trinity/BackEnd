@@ -24,6 +24,11 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
      */
     private final static double FSPL_CONST_M_MHZ = 27.55;
 
+    /**
+     * RSSI of reference that correspond to the received signal at 1 meter
+     */
+    private final static double REF_PWR = -45.0;
+
     @Override
     public Location computeLocation(@NotNull Hotspot hotspot) {
 
@@ -84,7 +89,10 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
      */
     private double strengthToDistance(@NotNull Location location, @Positive double frequency) {
 
+        /* Former formula Todo: find a good formula taking account of the frequency
         return Math.pow(10.0,
                         (FSPL_CONST_M_MHZ - (20.0 * Math.log10(frequency)) - ((double) location.getStrength())) / 20.0);
+                        */
+        return Math.pow(10d, (REF_PWR - (double) location.getStrength()) / 20.0);
     }
 }
