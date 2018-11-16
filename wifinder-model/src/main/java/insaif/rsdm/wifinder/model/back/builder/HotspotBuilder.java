@@ -11,6 +11,7 @@ public class HotspotBuilder {
     private String ssid = null;
     private int connectionCount = 0;
     private Location computedLocation = null;
+    private Integer frequency = null;
     private List<Location> locations = null;
 
     public static HotspotBuilder get() {
@@ -37,6 +38,11 @@ public class HotspotBuilder {
         return this;
     }
 
+    public HotspotBuilder setFrequency(Integer frequency) {
+        this.frequency = frequency;
+        return this;
+    }
+
     public HotspotBuilder setLocations(List<Location> locations) {
         this.locations = locations;
         return this;
@@ -48,6 +54,7 @@ public class HotspotBuilder {
         hotspot.setSsid(ssid);
         hotspot.setConnectionCount(connectionCount);
         hotspot.setComputedLocation(computedLocation);
+        hotspot.setFrequency(frequency);
         hotspot.setLocations(locations);
 
         return hotspot;

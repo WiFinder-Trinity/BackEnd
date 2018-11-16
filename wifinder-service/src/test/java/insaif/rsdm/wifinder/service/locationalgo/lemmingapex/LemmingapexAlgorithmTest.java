@@ -5,8 +5,8 @@ import insaif.rsdm.wifinder.model.back.Location;
 import insaif.rsdm.wifinder.model.back.builder.HotspotBuilder;
 import insaif.rsdm.wifinder.model.back.builder.LocationBuilder;
 import insaif.rsdm.wifinder.service.TestApplication;
-
 import insaif.rsdm.wifinder.service.locationalgo.LocationAlgorithm;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,29 +40,29 @@ public class LemmingapexAlgorithmTest {
     LocationAlgorithm locationAlgorithm;
 
     @Test
-    public void computeLocation_From2UsersLocations_Null()
-    {
+    public void computeLocation_From2UsersLocations_Null() {
         // data from https://appelsiini.net/2017/trilateration-with-n-points/
         ArrayList<Location> locations = new ArrayList<>();
 
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42606837)
-                .setLongitude(24.72553151)
-                .setStrength(distanceToStrength(8.0))
-                .build());
+                                     .setLatitude(59.42606837)
+                                     .setLongitude(24.72553151)
+                                     .setStrength(distanceToStrength(8.0))
+                                     .build());
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42610146)
-                .setLongitude(24.72552969)
-                .setStrength(distanceToStrength(8.0))
-                .build());
+                                     .setLatitude(59.42610146)
+                                     .setLongitude(24.72552969)
+                                     .setStrength(distanceToStrength(8.0))
+                                     .build());
 
         Hotspot hotspot = HotspotBuilder.get()
-                .setSsid("test ssid")
-                .setBssid("test bssid")
-                .setConnectionCount(4)
-                .setLocations(locations)
-                .setComputedLocation(null)
-                .build();
+                                        .setSsid("test ssid")
+                                        .setBssid("test bssid")
+                                        .setConnectionCount(4)
+                                        .setLocations(locations)
+                                        .setFrequency((int) WIFI_FREQ)
+                                        .setComputedLocation(null)
+                                        .build();
 
         Location location = locationAlgorithm.computeLocation(hotspot);
 
@@ -81,43 +80,44 @@ public class LemmingapexAlgorithmTest {
         ArrayList<Location> locations = new ArrayList<>();
 
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42606837)
-                .setLongitude(24.72553151)
-                .setStrength(distanceToStrength(8.0))
-                .build());
+                                     .setLatitude(59.42606837)
+                                     .setLongitude(24.72553151)
+                                     .setStrength(distanceToStrength(8.0))
+                                     .build());
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42610146)
-                .setLongitude(24.72552969)
-                .setStrength(distanceToStrength(8.0))
-                .build());
+                                     .setLatitude(59.42610146)
+                                     .setLongitude(24.72552969)
+                                     .setStrength(distanceToStrength(8.0))
+                                     .build());
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42654852)
-                .setLongitude(24.72467492)
-                .setStrength(distanceToStrength(9.0))
-                .build());
+                                     .setLatitude(59.42654852)
+                                     .setLongitude(24.72467492)
+                                     .setStrength(distanceToStrength(9.0))
+                                     .build());
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42609108)
-                .setLongitude(24.72555759)
-                .setStrength(distanceToStrength(9.0))
-                .build());
+                                     .setLatitude(59.42609108)
+                                     .setLongitude(24.72555759)
+                                     .setStrength(distanceToStrength(9.0))
+                                     .build());
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42603039)
-                .setLongitude(24.72565661)
-                .setStrength(distanceToStrength(9.0))
-                .build());
+                                     .setLatitude(59.42603039)
+                                     .setLongitude(24.72565661)
+                                     .setStrength(distanceToStrength(9.0))
+                                     .build());
         locations.add(LocationBuilder.get()
-                .setLatitude(59.42666361)
-                .setLongitude(24.72449149)
-                .setStrength(distanceToStrength(14.0))
-                .build());
+                                     .setLatitude(59.42666361)
+                                     .setLongitude(24.72449149)
+                                     .setStrength(distanceToStrength(14.0))
+                                     .build());
 
         Hotspot hotspot = HotspotBuilder.get()
-                .setSsid("test ssid")
-                .setBssid("test bssid")
-                .setConnectionCount(4)
-                .setLocations(locations)
-                .setComputedLocation(null)
-                .build();
+                                        .setSsid("test ssid")
+                                        .setBssid("test bssid")
+                                        .setConnectionCount(4)
+                                        .setLocations(locations)
+                                        .setFrequency((int) WIFI_FREQ)
+                                        .setComputedLocation(null)
+                                        .build();
 
         Location location = locationAlgorithm.computeLocation(hotspot);
 

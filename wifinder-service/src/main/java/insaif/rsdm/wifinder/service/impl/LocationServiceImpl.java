@@ -2,24 +2,19 @@ package insaif.rsdm.wifinder.service.impl;
 
 import insaif.rsdm.wifinder.model.back.Hotspot;
 import insaif.rsdm.wifinder.model.front.FindInput;
-import insaif.rsdm.wifinder.model.front.HotspotInformation;
 import insaif.rsdm.wifinder.model.front.LocateOutput;
 import insaif.rsdm.wifinder.model.front.Location;
 import insaif.rsdm.wifinder.model.front.builder.LocateOutputBuilder;
 import insaif.rsdm.wifinder.model.front.builder.LocationBuilder;
-import insaif.rsdm.wifinder.repository.hotspot.HotspotRepository;
 import insaif.rsdm.wifinder.service.HotspotPersistence;
 import insaif.rsdm.wifinder.service.LocationService;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -28,12 +23,9 @@ public class LocationServiceImpl implements LocationService {
 
     private HotspotPersistence hotspotPersistence;
 
-    private HotspotRepository hotspotRepository;
-
     @Autowired
-    public LocationServiceImpl(HotspotPersistence hotspotPersistence, HotspotRepository hotspotRepository) {
+    public LocationServiceImpl(HotspotPersistence hotspotPersistence) {
         this.hotspotPersistence = hotspotPersistence;
-        this.hotspotRepository = hotspotRepository;
     }
 
 

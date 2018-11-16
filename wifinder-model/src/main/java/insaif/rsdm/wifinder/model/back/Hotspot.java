@@ -23,6 +23,8 @@ public class Hotspot {
     @Embedded
     private Location computedLocation;
 
+    private Integer frequency;
+
     public String getBssid() {
         return bssid;
     }
@@ -77,5 +79,13 @@ public class Hotspot {
 
     public void removeLocation(int index) {
         this.locations.remove(index);
+    }
+
+    public Integer getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
     }
 }

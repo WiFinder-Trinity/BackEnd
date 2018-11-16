@@ -5,17 +5,14 @@ import insaif.rsdm.wifinder.model.back.Location;
 import insaif.rsdm.wifinder.model.back.builder.LocationBuilder;
 import insaif.rsdm.wifinder.service.locationalgo.LocationAlgorithm;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
+import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
+import com.lemmingapex.trilateration.TrilaterationFunction;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
 import org.springframework.stereotype.Component;
-
-import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
-import com.lemmingapex.trilateration.TrilaterationFunction;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.util.List;
 
 @Component
 public class LemmingapexAlgorithm implements LocationAlgorithm {
@@ -25,12 +22,6 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
      * the frequency in MHz
      */
     private final static double FSPL_CONST_M_MHZ = 27.55;
-
-    /**
-     * The standard WiFi frequency in MHz
-     * TODO : add this to the model and collect ot from the front-end
-     */
-    private final static double WIFI_FREQ = 5000;
 
     @Override
     public Location computeLocation(@NotNull Hotspot hotspot) {
@@ -50,7 +41,7 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
             Location location = locations.get(i);
             positions[i][0] = location.getLatitude();
             positions[i][1] = location.getLongitude();
-            distances[i] = strengthToDistance(location, WIFI_FREQ);
+            distances[i] = strengthToDistance(location, hotspot.getFrequency());
         }
 
         double[] centroid = computeTrilateration(positions, distances);
