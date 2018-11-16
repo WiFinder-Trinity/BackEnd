@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -130,6 +131,38 @@ public class LemmingapexAlgorithmTest {
         log.info("latitude : " + computedLocation.getLatitude());
         assertThat(computedLocation.getLongitude()).isBetween(24.72522, 24.72525);
         log.info("longitude : " + computedLocation.getLongitude());
+    }
+
+    @Test
+    public void shouldReturnBullshit() {
+        ArrayList<Location> locations = new ArrayList<>();
+
+        locations.add(LocationBuilder.get()
+                                     .setLatitude(45.782369)
+                                     .setLongitude(4.872553)
+                                     .setStrength(distanceToStrength(-39))
+                                     .build());
+        locations.add(LocationBuilder.get()
+                                     .setLatitude(45.781856)
+                                     .setLongitude(4.872803)
+                                     .setStrength(distanceToStrength(-100))
+                                     .build());
+        locations.add(LocationBuilder.get()
+                                     .setLatitude(45.78211)
+                                     .setLongitude(4.872229)
+                                     .setStrength(distanceToStrength(-40))
+                                     .build());
+
+        Hotspot hotspot = HotspotBuilder.get()
+                                        .setSsid("test ssid")
+                                        .setBssid("test bssid")
+                                        .setConnectionCount(0)
+                                        .setLocations(locations)
+                                        .setFrequency(2400)
+                                        .build();
+
+        Location location = locationAlgorithm.computeLocation(hotspot);
+        log.info("computed location is lat : {} and lng : {}", location.getLatitude(), location.getLongitude());
     }
 
     private int distanceToStrength(double distance) {

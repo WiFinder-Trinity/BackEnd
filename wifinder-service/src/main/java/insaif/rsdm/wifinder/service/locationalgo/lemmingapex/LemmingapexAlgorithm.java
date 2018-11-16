@@ -10,6 +10,7 @@ import com.lemmingapex.trilateration.TrilaterationFunction;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
 import org.springframework.stereotype.Component;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -47,10 +48,10 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
         double[] centroid = computeTrilateration(positions, distances);
 
         hotspot.setComputedLocation(LocationBuilder.get()
-                .setLatitude(centroid[0])
-                .setLongitude(centroid[1])
-                .setStrength(0)
-                .build());
+                                                   .setLatitude(centroid[0])
+                                                   .setLongitude(centroid[1])
+                                                   .setStrength(0)
+                                                   .build());
 
         return hotspot.getComputedLocation();
     }
@@ -58,10 +59,11 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
     /**
      * Use the Lemmingapex API to compute the multi-trilateration of the positions given in parameters and theirs
      * associated distances
+     *
      * @param positions the table of the coordinates of the positions from which the trilateration is computed, [i][0]
-     *                 for latitude and [1] for longitude, cannot be null.
+     *                  for latitude and [1] for longitude, cannot be null.
      * @param distances the distances between the positions and the researched centroid, in the same order than
-     *                 positions, cannot be null.
+     *                  positions, cannot be null.
      * @return the table of the two coordinates of the centroid of the ellipse computed by the trilateration, [0] is
      * latitude and [1] is longitude, cannot be null.
      */
@@ -76,11 +78,13 @@ public class LemmingapexAlgorithm implements LocationAlgorithm {
 
     /**
      * Get the distance between the hotspot and the location given the strength and frequency of the WiFi signal
-     * @param location the location with the strength of the signal, cannot be null
+     *
+     * @param location  the location with the strength of the signal, cannot be null
      * @param frequency the frequency of the signal, cannot be negative
      */
     private double strengthToDistance(@NotNull Location location, @Positive double frequency) {
 
-        return Math.pow(10, (FSPL_CONST_M_MHZ + (20 * Math.log10(frequency)) + ((double)location.getStrength()))/ 20);
+        return Math.pow(10.0,
+                        (FSPL_CONST_M_MHZ - (20.0 * Math.log10(frequency)) - ((double) location.getStrength())) / 20.0);
     }
 }

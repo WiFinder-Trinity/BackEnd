@@ -9,6 +9,7 @@ import insaif.rsdm.wifinder.model.front.HotspotInformation;
 import insaif.rsdm.wifinder.repository.hotspot.HotspotRepository;
 import insaif.rsdm.wifinder.service.HotspotPersistence;
 import insaif.rsdm.wifinder.service.locationalgo.LocationAlgorithm;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,10 +32,10 @@ public class HotspotPersistenceImpl implements HotspotPersistence {
     @Override
     public Hotspot addOrUpdateHotspot(FindInput input, HotspotInformation hotspotInformation) {
         Location location = LocationBuilder.get()
-                .setLatitude(input.getLatitude())
-                .setLongitude(input.getLongitude())
-                .setStrength(hotspotInformation.getStrength())
-                .build();
+                                           .setLatitude(input.getLatitude())
+                                           .setLongitude(input.getLongitude())
+                                           .setStrength(hotspotInformation.getStrength())
+                                           .build();
 
         Optional<Hotspot> optionalHotspot = hotspotRepository.findById(hotspotInformation.getBssid());
 
@@ -51,10 +52,11 @@ public class HotspotPersistenceImpl implements HotspotPersistence {
         } else {
 
             Hotspot hotspot = HotspotBuilder.get()
-                    .setBssid(hotspotInformation.getBssid())
-                    .setSsid(hotspotInformation.getSsid())
-                    .setLocations(Collections.singletonList(location))
-                    .build();
+                                            .setBssid(hotspotInformation.getBssid())
+                                            .setSsid(hotspotInformation.getSsid())
+                                            .setFrequency(hotspotInformation.getFrequency())
+                                            .setLocations(Collections.singletonList(location))
+                                            .build();
             return hotspotRepository.save(hotspot);
         }
     }

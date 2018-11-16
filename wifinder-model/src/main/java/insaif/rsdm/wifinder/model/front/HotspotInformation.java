@@ -13,6 +13,9 @@ public class HotspotInformation {
     @NotNull
     private Integer strength;
 
+    @NotNull
+    private Integer frequency;
+
     public String getBssid() {
         return bssid;
     }
@@ -25,6 +28,10 @@ public class HotspotInformation {
         return strength;
     }
 
+    public Integer getFrequency() {
+        return frequency;
+    }
+
     public void setBssid(String bssid) {
         this.bssid = bssid;
     }
@@ -35,5 +42,9 @@ public class HotspotInformation {
 
     public void setStrength(Integer strength) {
         this.strength = strength;
+    }
+
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
     }
 }
